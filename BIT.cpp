@@ -1,21 +1,30 @@
-class BIT
+#include<iostream>
+#include<vector>
+using namespace std;
+
+template<class T> class BIT
 {
-	long long tree[100010];
-	int n;
-	
 	public:
-		BIT(int A[],int N)
+		typedef T value_type;
+	private:
+		vector<value_type> tree;
+	public:
+		BIT(){}
+		
+		BIT(int n)
 		{
-			n=N;
-			for(int i=0;i<=n;i++)
-				tree[i]=0;
-			
-			for(int i=1;i<=n;i++)
-				increase(i,A[i]);
+			assign(n);
 		}
-		long long read(int idx)
+		
+		void assign(int n)
 		{
-			int sum=0;
+			tree.clear();
+			tree.resize(n+1);
+		}
+	
+	 	value_type read(size_t idx) const
+		{
+			value_type sum=0;
 			while(idx>0)
 			{
 				sum+=tree[idx];
@@ -24,33 +33,29 @@ class BIT
 			return sum;
 		}
 		
-		void increase(int idx, int val)
+		void increase(size_t idx, const value_type &val)
 		{ 
-			while (idx <= n)
+			while (idx <= tree.size()-1)
 			{ 
 				tree[idx] += val; 
 				idx += (idx & (- idx)); 
 			}
 		}
-		long long query(int a,int b)
+		value_type query(size_t a,size_t b) const
 		{
 			return read(b)-read(a-1);
 		}
+		void clear()
+		{
+			tree.clear();
+		}
 };
-
 
 int main()
 {
-	int n,q;
-	cin>>n>>q;
-	BIT tree(n);
-	for(int i=1;i<=n;i++)
-	{
-		long long temp;
-		cin>>temp;
-		
-	}
-	
-
-}
+	BIT<long long> a(6);
+	a.increase(5,2);
+	a.increase(6,3);
+	cout<<a.read(5);
+	cout<<a.read(6);
 }
