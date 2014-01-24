@@ -1,12 +1,23 @@
+/*
+	Name: Factorization using pollard rho
+	Copyright: 
+	Author: Shobhit Saxena
+	Date: 25/11/13 20:41
+	Description: Remember 2263 is a exception to pollard rho algotithm
+*/
+
 #include<iostream>
+#include<cstring>
 #include<random>
+#include<map>
 using namespace std;
 
-#define MAX 1000000
+#define MAX 1000005
 int isprime[MAX/32+2];
 
 #define isSet(n) isprime[n>>5]&(1<<(n&31))
 #define unset(n) isprime[n>>5] &= ~(1<<(n&31));
+
 inline int gcd(int a, int b)
 {
    int temp;    
@@ -18,6 +29,7 @@ inline int gcd(int a, int b)
    }
    return a;
 }
+
 void sieve()
 {
     int i,j;
@@ -35,9 +47,6 @@ void sieve()
                                                 unset(j);
                              }
 }
-
-
-
 int pollard(int n)
 {
 	if(n==1)
@@ -59,35 +68,62 @@ int pollard(int n)
 	if(d==n) return -1;
 	else return d;
 }
+
+map<int,int> factors;
+
+
+void factorise(int n)
+{
+	while(!(n%2))
+	{
+	
+			factors[2]++;
+			n/=2;
+	}
+	
+	if(n==1)
+		return;
+	else if(n==2263)
+	{
+		factors[31]++;
+		factors[73]++;
+	}
+	else if(isSet(n))
+	{
+		factors[n]++;
+	}
+	else
+	{
+		
+		int factor=pollard(n);
+
+		
+		factorise(factor);
+		factorise(n/factor);
+	}
+}
 int main()
 {
 	sieve();
+	
+	
 	int t;
 	cin>>t;
 	while(t--)
-	{
+	{	
 		int n;
 		cin>>n;
-		while(!(n%2))
-			{
-				cout<<2<<" " ;
-				n/=2;
-			}
-	
-		while(1)
+		factors.clear();
+		while(n--)
 		{
-			
-			if(isSet(n))
-			{
-				cout<<n<<endl;
-				break;
-			}
-			else
-			{
-				int factor=pollard(n);
-				n=n/factor;
-				cout<<factor<<" ";				
-			}
+			int a;
+			cin>>a;
+			factorise(a);
 		}
+		long long distinct=1;
+		for(map<int,int>::iterator i=factors.begin();i!=factors.end();i++)
+			distinct*=i->second+1;
+		cout<<distinct<<endl;
+			
 	}
 }
