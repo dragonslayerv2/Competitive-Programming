@@ -1,3 +1,11 @@
+/*
+	Name: Strongly Connected Componenets
+	Copyright: 
+	Author: Shobhit Saxena
+	Date: 26/01/14 22:31
+	Description: refer to cormen for explanation.
+*/
+
 #include<iostream>
 #include<vector>
 #include<list>
