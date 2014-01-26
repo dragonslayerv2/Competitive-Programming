@@ -23,7 +23,7 @@ void topologicalSort(graph &G,list<int> &topologicallySortedList)
 }
 void computeSCCDFS(graph &G,int source,int SCCNumber,vector<int> &SCC)
 {
-	if(SCC[source]!=-1)
+	if(SCC[source]==-1)
 	{
 		SCC[source]=SCCNumber;
 		for(list<int>::iterator i=G[source].begin();i!=G[source].end();i++)
@@ -45,7 +45,8 @@ int computeSCC(graph &G,vector<int> &SCC)
 	int SCCNumber=0;
 	while(topologicallySortedList.size())
 	{
-		if(SCC[topologicallySortedList.front()]!=-1)
+	
+		if(SCC[topologicallySortedList.front()]==-1)
 			computeSCCDFS(G,topologicallySortedList.front(),SCCNumber++,SCC);
 		topologicallySortedList.pop_front();
 	}
@@ -53,6 +54,7 @@ int computeSCC(graph &G,vector<int> &SCC)
 }
 int main()
 {
+//	freopen("test.txt","r",stdin);
 	int v,e;
 	cin>>v>>e;
 	graph G(v);
