@@ -3,7 +3,8 @@
 	Copyright: 
 	Author: Shobhit Saxena
 	Date: 29/01/14 13:22
-	Description: 
+	Description: Graph search to solve missionaries and canibel problem.
+				 BFS.
 */
 
 #include<iostream>
@@ -11,23 +12,18 @@
 #include<map>
 using namespace std;
 
-inline void unpack(int &mLeft,int &mRight,int &cLeft,int &cRight,int a)
+inline void unpack(int &mLeft,int &cLeft,int &boat,int a)
 {
-	mLeft=a/10000;
-	mRight=(a/100)%10;
-	cLeft=(a/1000)%10;
-	cRight=(a/10)%10;
+	mLeft=a/100;
+	cLeft=(a/10)%10;
+	boat=a%10;
 }
 
-inline int pack(int mLeft,int mRight,int cLeft,int cRight,int boat)
+inline int pack(int mLeft,int cLeft,int boat)
 {
 	int answer=mLeft;
 	answer*=10;
 	answer+=cLeft;
-	answer*=10;
-	answer+=mRight;
-	answer*=10;
-	answer+=cRight;
 	answer*=10;
 	answer+=boat;
 	return answer;
@@ -35,14 +31,12 @@ inline int pack(int mLeft,int mRight,int cLeft,int cRight,int boat)
 
 inline bool isValid(int a)
 {
-	int mLeft,mRight,cLeft,cRight;
-	unpack(mLeft,mRight,cLeft,cRight,a);
+	int mLeft,cLeft,boat;
+	unpack(mLeft,cLeft,boat,a);
 	
-	if(mLeft+mRight!=3&&cLeft+cRight!=3)
-		return false;
 	if(mLeft!=0&&cLeft>mLeft)
 		return false;
-	else if(mRight!=0&&cRight>mRight)
+	else if((3-mLeft)!=0&&(3-cLeft)>(3-mLeft))
 		return false;
 	else
 		return true;
@@ -52,14 +46,12 @@ inline bool isValid(int a)
 //------------------------------------------------------------------------------
 int main()
 {
-	int initialState = 33000; 
-	int finalState = 331; 
+	int initialState = 330; 
+	int finalState 	 = 1; 
 	/*	
-		First Digit : Missionaries on left bank
-		Second 		: Canibels on left bank
-		Third		: Missionaries on right bank
-		Fourth		: Canibels on right bank
-		Left most	: Boat on which bank
+		Most Significant Digit 	: Missionaries on left bank
+		Second 					: Canibels on left bank
+		Left most				: Boat on which bank
 	*/
 					
 	map<int,int> parent; // state parent relationship
@@ -68,12 +60,12 @@ int main()
 	Q.push(initialState);
 	while(!Q.empty()&&Q.front()!=finalState)
 	{
+		
 		int current=Q.front();	
 		Q.pop();
 		
-		int mLeft,mRight,cLeft,cRight;
-		unpack(mLeft,mRight,cLeft,cRight,current);
-		int boat=current%10;
+		int mLeft,cLeft,boat;
+		unpack(mLeft,cLeft,boat,current);
 
 		if(boat==0)
 		{
@@ -81,7 +73,7 @@ int main()
 				for(int c=0;c<=cLeft;c++)
 					if(m+c!=0&&m+c<=2)
 					{
-						int move=pack(mLeft-m,mRight+m,cLeft-c,cRight+c,1);		
+						int move=pack(mLeft-m,cLeft-c,1);		
 						if(isValid(move)&&!parent[move])
 						{
 							parent[move]=current;
@@ -92,11 +84,11 @@ int main()
 		
 		else
 		{
-			for(int m=0;m<=mRight;m++)
-				for(int c=0;c<=cRight;c++)
+			for(int m=0;m<=(3-mLeft);m++)
+				for(int c=0;c<=(3-cLeft);c++)
 					if(m+c!=0&&m+c<=2)
 					{
-						int move=pack(mLeft+m,mRight-m,cLeft+c,cRight-c,0);		
+						int move=pack(mLeft+m,cLeft+c,0);		
 						if(isValid(move)&&!parent[move])
 						{
 							parent[move]=current;
