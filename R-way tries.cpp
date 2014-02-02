@@ -92,7 +92,6 @@ template<class VAL, class HASH,size_t R> class trie
 		
 		const value_type operator[](const char *a) const
 		{
-			
 			size_t i;
 			for(i=0;a[i]!='\0';i++);
 			return find(a,a+i)->second;

@@ -79,7 +79,6 @@ int dfs(int graph[MAX][MAX],int n,bool isVisited[MAX],int v,int DFN,int dfn[MAX]
 		return count+1;
 	}
 	else return count;
-	
 }
 
 
