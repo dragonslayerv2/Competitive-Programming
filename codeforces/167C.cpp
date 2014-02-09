@@ -159,53 +159,58 @@ template<class T,class U, class MF,class UN,class L> class segmentTree
 
 struct updateNode
 {
-	pair<int,int> operator()(pair<int,int> node,int newValue)
+	long long operator()(long long node,long long newValue)
 	{
-		return make_pair(node.first+newValue,node.second+newValue);
+		return newValue;
 	}	
 };
 
 struct mergeNode
 {
-	pair<int,int> operator()(pair<int,int> left,pair<int,int> right)
+	long long operator()(long long left,long long right)
 	{
-		return make_pair(min(left.first,right.first),max(left.second,right.second));
+		return max(left,right);
 	}
 };
 
 struct LazyUpdate
 {
-	typedef int value_type;
-	static const int default_value;
-	static const int invalid_value;
-	pair<int,int> updateNode(pair<int,int> node,int lazy,size_t,size_t)
+	typedef long long value_type;
+	static const long long default_value;
+	static const long long invalid_value;
+	long long updateNode(long long node,long long lazy,size_t,size_t)
 	{
-		return make_pair(node.first+lazy,node.second+lazy);
+		return lazy;
 	}
-	int updateLazy(int belowLazy,int lazy)
+	long long updateLazy(long long belowLazy,long long lazy)
 	{
-		belowLazy+=lazy;
+		belowLazy=lazy;
 		return belowLazy;
 	}
 };
-const int LazyUpdate::default_value=0;
-const int LazyUpdate::invalid_value=0;
+const long long LazyUpdate::default_value=0;
+const long long LazyUpdate::invalid_value=0;
 //------------------------------------------------------------------------------
 int main()
 {
 	int n;
 	cin>>n;
-	segmentTree<int,int,mergeNode,updateNode,LazyUpdate> T(n,0);
-	while(1)
+	segmentTree<long long,long long,mergeNode,updateNode,LazyUpdate> T(n,0);
+	for(int i=0;i<n;i++)
 	{
-		int type, a,b,value;
-		cin>>type>>a>>b;
-		if(type)
-		{
-			cin>>value;
-			T.update(a,b,value);
-		}
-		else
-			cout<<T.query(a,b)<<endl;
+		long long height;
+		cin>>height;
+		T.update(i,i,height);
+	}
+	int q;
+	cin>>q;
+	while(q--)
+	{
+		int w,h;
+		cin>>w>>h;
+		w--;
+		cout<<T.query(0,w)<<endl;
+		T.update(0,w,T.query(0,w)+h);
+		
 	}
 }
