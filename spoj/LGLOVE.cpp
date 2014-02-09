@@ -1,16 +1,56 @@
-/*
-	Name: Generic Segment Tree
-	Copyright: 
-	Author: Shobhit Saxena
-	Date: 09/02/14 12:27
-	Description: This is the generic implementation of Segment trees.
-	Update the UpdateFunction and MergeFunction to change the behaviour of the tree.
-*/
-
-#include<iostream>
+#include<stdio.h>
 #include<vector>
-#include<climits>
 using namespace std;
+
+
+#define isSet(n) isprime[n>>5]&(1<<(n&31))
+#define unset(n) isprime[n>>5] &= ~(1<<(n&31));
+#define MAX 3000000
+int isprime[MAX/32+2];
+
+void sieve()
+{
+    int i,j;
+    isprime[0]=0xA28A28AC;
+    for(int i=1;i<=MAX/32+1;i+=3)
+    {
+            isprime[i]  =0x28A28A28;
+            isprime[i+1]=0x8A28A28A;
+            isprime[i+2]=0xA28A28A2;
+    }
+    for(i=5;i*i<=MAX;i+=2)
+   		if(isSet(i))
+        	for(j=i*i;j<=MAX;j+=i)
+        		unset(j);
+}
+long long LCM[MAX];
+
+#define MOD 1000000007
+void preprocess()
+{
+	sieve();
+	for(int i=0;i<MAX;i++)
+		LCM[i]=1;
+	
+	LCM[0]=0;
+	LCM[1]=1;
+	
+	for(int i=2;i<MAX;i++)
+		if(isSet(i))
+			for(long long j=i;j<MAX;j*=i)
+			{
+				LCM[j]*=i;
+				LCM[j]%=MOD;
+			}
+	
+	long long current=1;
+	for(int i=2;i<MAX;i++)
+	{
+		current*=LCM[i];
+		current%=MOD;
+		LCM[i]=current;
+	}
+}
 
 //------------------------------------------------------------------------------
 template<class T,class U, class MF,class UN,class L> class segmentTree
@@ -191,21 +231,33 @@ struct LazyUpdate
 const int LazyUpdate::default_value=0;
 const int LazyUpdate::invalid_value=0;
 //------------------------------------------------------------------------------
+
 int main()
 {
-	int n;
-	cin>>n;
-	segmentTree<int,mergeNode,updateNode,LazyUpdate> T(n,0);
-	while(1)
+	preprocess();
+	int n,m;
+	scanf("%d %d",&n,&m);
+	
+	segmentTree<pair<int,int> ,int, mergeNode,updateNode,LazyUpdate> T(n);
+	for(int i=0;i<n;i++)
 	{
-		int type, a,b,value;
-		cin>>type>>a>>b;
-		if(type)
+		int a;
+		scanf("%d",&a);
+		T.update(i,i,a);
+	}
+	while(m--)
+	{
+		int type,i,j,value;
+		scanf("%d %d %d",&type,&i,&j);
+		switch(type)
 		{
-			cin>>value;
-			T.update(a,b,value);
+			case 0: scanf("%d",&value);
+					T.update(i,j,value);
+					break;
+			case 1:	printf("%d\n",LCM[T.query(i,j).second]);
+					break;
+			case 2:	printf("%d\n",LCM[T.query(i,j).first]);
+					break;
 		}
-		else
-			cout<<T.query(a,b)<<endl;
 	}
 }
