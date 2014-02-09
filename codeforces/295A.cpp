@@ -1,12 +1,3 @@
-/*
-	Name: RangeUpdate Data Structure
-	Copyright: 
-	Author: Shobhit Saxena
-	Date: 08/02/14 13:03
-	Description: This data structure Process the range update queries once and output the array at last.
-				O(1) per query + O(n) in the end.
-*/
-
 #include<iostream>
 #include<vector>
 using namespace std;
@@ -66,6 +57,10 @@ template<class T> class rangeUpdateDS
 				array[i]+=current; // change this as per ur need.
 			}
 		}
+		size_t size()
+		{
+			return array.size();
+		}
 		//----------------------------------------------------------------------
 		value_type operator[](size_t pos)
 		{
@@ -77,26 +72,58 @@ template<class T> class rangeUpdateDS
 			incrementArray.clear();
 			array.clear();
 		}
-		size_t size()
-		{
-			return array.size();
-		}
 };
+
 
 int main()
 {
-	int n;
-	cin>>n;
-	rangeUpdateDS<int> DS(n);
-	int q;
-	cin>>q;
-	while(q--)
+	int n,m,k;
+	cin>>n>>m>>k;
+	vector<long long> array(n);
+	for(int i=0;i<n;i++)
+		cin>>array[i];
+	
+	struct query
+	{
+		long long low,high,value;
+		
+		query()
+		{}
+		query(long long l,long long h,long long v)
+		{
+			low=l;
+			high=h;
+			value=v;
+		}
+	};
+	
+	vector<query> Q(m);
+	for(int i=0;i<m;i++)
+	{
+		cin>>Q[i].low>>Q[i].high>>Q[i].value;
+		Q[i].low--;
+		Q[i].high--;
+	}
+	
+	rangeUpdateDS<long long> QDS(m);
+	while(k--)
 	{
 		int a,b;
 		cin>>a>>b;
-		DS.update(a,b,1);
-	}	
-	DS.process();
-	for(int i=0;i<n;i++)
-		cout<<DS[i]<<" ";
+		a--;
+		b--;
+		QDS.update(a,b,1);
+	}
+	QDS.process();
+	for(int i=0;i<QDS.size();i++)
+		Q[i].value*=QDS[i];
+		
+	QDS.clear();
+	QDS.assign(n);
+	for(int i=0;i<Q.size();i++)
+		QDS.update(Q[i].low,Q[i].high,Q[i].value);
+	QDS.process();
+	for(int i=0;i<array.size();i++)
+		cout<<array[i]+QDS[i]<<" ";
+	
 }
