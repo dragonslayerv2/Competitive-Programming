@@ -43,14 +43,14 @@ template<class T,class MF,class UN> class segmentTree
 		{
 			
 			if(low==high)
-				tree[node]=A[low-1];
+				tree[node]=A[low];
 			else if(low>high)
 				return;
 			else
 			{
-				buildTree(A,low,(low+high)/2,node*2);
-				buildTree(A,(low+high)/2+1,high,node*2+1);
-				tree[node]=update_func(tree[leftChild(node)],tree[rightChild(node)]);
+				buildTree(A,low,(low+high)/2,leftChild(node));
+				buildTree(A,(low+high)/2+1,high,rightChild(node));
+				tree[node]=mergeFunction(tree[leftChild(node)],tree[rightChild(node)]);
 			}
 		}
 		
@@ -117,7 +117,7 @@ template<class T,class MF,class UN> class segmentTree
 		void assign(const vector<value_type> &A) // assumes vector to be 0 indexed
 		{
 			assign(A.size());
-			build_tree(A,0,A.size()-1,0);	
+			buildTree(A,0,A.size()-1,0);	
 		}
 		
 		void clear()
@@ -140,7 +140,6 @@ template<class T,class MF,class UN> class segmentTree
 			clear();
 		}	
 };
-
 struct updateNode
 {
 	int operator()(int node,int newValue)
