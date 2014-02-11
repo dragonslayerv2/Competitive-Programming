@@ -159,17 +159,17 @@ template<class T,class U, class MF,class UN,class L> class segmentTree
 
 struct updateNode
 {
-	pair<int,int> operator()(pair<int,int> node,int newValue)
+	int operator()(int node,int newValue)
 	{
-		return make_pair(node.first+newValue,node.second+newValue);
+		return node+newValue;
 	}	
 };
 
 struct mergeNode
 {
-	pair<int,int> operator()(pair<int,int> left,pair<int,int> right)
+	int operator()(int left,int right)
 	{
-		return make_pair(min(left.first,right.first),max(left.second,right.second));
+		return left+right;
 	}
 };
 
@@ -178,9 +178,9 @@ struct LazyUpdate
 	typedef int value_type;
 	static const int default_value;
 	static const int invalid_value;
-	pair<int,int> updateNode(pair<int,int> node,int lazy,size_t,size_t)
+	int updateNode(int node,int lazy,size_t,size_t)
 	{
-		return make_pair(node.first+lazy,node.second+lazy);
+		return node+lazy;
 	}
 	int updateLazy(int belowLazy,int lazy)
 	{
