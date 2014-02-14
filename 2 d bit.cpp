@@ -28,7 +28,7 @@ template<class T> class DBIT
 			while(x>0)
 			{
 				size_t dummyy=y;
-				while(y>0)
+				while(dummyy>0)
 				{
 					sum+=tree[x][dummyy];
 					dummyy-=(dummyy&(-dummyy));
@@ -43,7 +43,7 @@ template<class T> class DBIT
 			while (x <= tree.size()-1)
 			{ 
 				int dummyy=y;
-				while(y<=tree[x].size()-1)
+				while(dummyy<=tree[x].size()-1)
 				{
 					tree[x][dummyy] += val;
 					dummyy += (dummyy & (- dummyy)); 
@@ -63,7 +63,7 @@ template<class T> class DBIT
 
 int main()
 {
-	DBIT<long long> a(6,5);
+	DBIT<long long> a(10,20);
 	a.increase(5,2,1);
 	a.increase(6,3,1);
 	cout<<a.read(5,2);
