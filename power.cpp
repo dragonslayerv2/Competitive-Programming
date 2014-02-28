@@ -2,9 +2,9 @@
 #define MOD (10000000+7)
 
 
-long long p(int n,int m)
+long long p(long long n,long long m)
 {
-    if(m==0) return 1;
+    if(m==0) return 1%MOD;
     
     long long x=p(n,m/2);
     if(m%2==0) 
@@ -12,3 +12,6 @@ long long p(int n,int m)
     else
                return (((x*x)%MOD)*n)%MOD;
 }
+
+
+
