@@ -1,6 +1,6 @@
 #include<stdio.h>
 
-inline unsigned long long gcf(unsigned long long a, unsigned long long b)
+inline unsigned long long gcd(unsigned long long a, unsigned long long b)
 {
    unsigned long long temp;    
    while(b)
