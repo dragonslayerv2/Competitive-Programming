@@ -11,8 +11,6 @@
 #include<vector>
 using namespace std;
 
-#define DEBUG
-
 //----------------------------------- median finding algorithm-----------------
 template<class iterator,class compare>iterator random_partition(iterator begin, iterator end,const compare &cmp)
 {
@@ -87,31 +85,15 @@ template<size_t K>class kdtree
 				newleaf->left=newleaf->right=NULL;
 				for(size_t k=0;k<K;k++)
 					newleaf->point[k]=(*begin)[k];
-				
-				#ifdef DEBUG
-				cout<<"Creating leaf ";
-				for(int i=0;i<K;i++)
-					cout<<newleaf->point[i]<<" ";
-				cout<<endl;
-				#endif
+
 				return newleaf;
 			}
 			else
 			{
-				#ifdef DEBUG
-				cout<<"Creating internal node ";
-				
-				cout<<endl;
-				#endif
 				node* internal_node=new node;
 				internal_node->is_leaf=false;
 				iterator median=select(begin,begin+(end-begin)/2,end,_compare(depth%K));
 				
-				#ifdef DEBUG
-				cout<<"Splitting about ";
-				cout<<(*median)[depth%K]<<" ";
-				cout<<endl;
-				#endif
 				internal_node->left=_build_tree(begin,median,depth+1);
 				internal_node->right=_build_tree(median,end,depth+1);
 				internal_node->value=(*median)[depth%K];
