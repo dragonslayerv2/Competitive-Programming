@@ -29,16 +29,14 @@ void sieve()
     isprime[0]=0xA28A28AC;
     for(int i=1;i<=MAX/32+1;i+=3)
     {
-            isprime[i]  =0x28A28A28;
-            isprime[i+1]=0x8A28A28A;
-            isprime[i+2]=0xA28A28A2;
+    	isprime[i]  =0x28A28A28;
+        isprime[i+1]=0x8A28A28A;
+        isprime[i+2]=0xA28A28A2;
     }
     for(i=5;i*i<=MAX;i+=2)
-                           if(isSet(i))
-                             {
-                                        for(j=i*i;j<=MAX;j+=i)
-                                                unset(j);
-                             }
+        if(isSet(i))
+            for(j=i*i;j<=MAX;j+=i)
+                unset(j);
 }
 
 
