@@ -23,6 +23,6 @@ int subsetsum(int a[],int n)
 int main()
 {
     int a[]={1,2,3};
-    printf("%d",subsetsum(a,sizeof(a)/sizeof(*a)));
+    printf("sum = %d",subsetsum(a,sizeof(a)/sizeof(*a)));
     getchar();
 }

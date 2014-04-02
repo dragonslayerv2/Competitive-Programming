@@ -12,17 +12,7 @@ int isprime[MAX/32+2];
 #define isSet(n) isprime[n>>5]&(1<<(n&31))
 #define unset(n) isprime[n>>5] &= ~(1<<(n&31));
 
-inline int gcd(int a, int b)
-{
-   int temp;    
-   while(b)
-   {
-           temp=a;
-           a=b;
-           b=temp%b;
-   }
-   return a;
-}
+
 void sieve()
 {
     int i,j;
