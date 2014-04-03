@@ -30,7 +30,7 @@ void dfs(int pos)
 
 int main()
 {
-//	freopen("test.txt","r",stdin);
+	//freopen("test.txt","r",stdin);
 	int n,q;
 	cin>>n>>q;
 	
@@ -75,25 +75,28 @@ int main()
 			else
 				nodeWeight[j->first]=j->second;
 		}
+
 	childrenWeight.resize(n+1,0);	
 	removed.resize(n+1,false);
+
 	while(n-1>q)
 	{	
 		dfs(1);
 		
 		int minChild=INT_MAX;
 		int minNode=-1;
-		for(int i=1;i<=n;i++)
+		for(int i=1;i<removed.size();i++)
+		{
 			if(!removed[i]&&childrenWeight[i]<minChild)
 			{
 				minChild=childrenWeight[i];
 				minNode=i;
 			}
-		if(minNode==-1)
-			break;
+		}
 		removed[minNode]=true;
 		n--;
 	}
+	
 	dfs(1);
 	cout<<childrenWeight[1];
 }
