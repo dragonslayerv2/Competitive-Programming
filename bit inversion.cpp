@@ -57,26 +57,29 @@ int main()
 {
 	int n;
 	cin>>n;
-	vector<pair<int,int> > marriage(n);
-	map<int,int> male;
-	map<int,int> female;
+	
+	vector<int> array(n);
+	map<int,int> rank;
+	
 	for(int i=0;i<n;i++)
 	{
-		cin>>marriage[i].first>>marriage[i].second;
-		female[marriage[i].second]++;
+		cin>>array[i];
+		rank[array[i]]=0;
 	}
-	sort(marriage.begin(),marriage.end());
-	int rank=1;
-	for(map<int,int>::iterator i=female.begin();i!=female.end();i++)
-		i->second=rank++;
 	
-	long long count=0;
+	int r=0;
+	for(map<int,int>::iterator i=rank.begin();i!=rank.end();i++)
+		i->second=(++r);
+
+	BIT<long long> T(rank.size()+20);
 	
-	BIT<long long> T(rank+100);
-	for(int i=0;i<n;i++)
+	long long count=0;	
+	
+	for(int i=0;i<array.size();i++)
 	{
-		count+=T.query(female[marriage[i].second],rank);
-		T.increase(female[marriage[i].second],1);
+		count+=T.query(rank[array[i]],rank.size());
+		T.increase(rank[array[i]],1);
 	}
+	
 	cout<<count<<endl;
 }
