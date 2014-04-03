@@ -2,11 +2,11 @@
 #define MOD (10000000+7)
 
 
-long long p(long long n,long long m)
+template<class T> T p(T n,T m)
 {
     if(m==0) return 1%MOD;
     
-    long long x=p(n,m/2);
+    T x=p(n,m/2);
     if(m%2==0) 
                return (x*x)%MOD;
     else
