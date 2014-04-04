@@ -1,4 +1,5 @@
 #include<iostream>
+#include<cmath>
 using namespace std;
 
 #define PRECISION 0.0000001
@@ -13,19 +14,6 @@ double p(double n,int m)
                return ((x*x)*n);
 }
 
-
-double nroot(int k,int n)
-{
-	double last=k; 
-	double nw=k;
-	do
-	{
-		last=nw;
-		nw=((k-p(last,n))/(n*p(last,n-1)))+last;
-	}
-	while(!(nw<=last+PRECISION&&nw>=last-PRECISION));
-	return nw;
-}
 int main()
 {
 	int t;
@@ -41,11 +29,9 @@ int main()
 			cout<<0.0<<endl;
 		else
 		{
-			double value=k;
-			
 			cout.setf(ios::fixed);
 			cout.precision(6);
-			cout<<nroot(value,n)<<endl;
+			cout<<exp(log(k*p(n,n))/n)<<endl;
 		}
 	}
 }

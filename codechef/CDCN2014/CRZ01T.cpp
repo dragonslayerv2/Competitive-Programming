@@ -16,8 +16,8 @@ double p(double n,int m)
 
 double nroot(int k,int n)
 {
-	double last=k; 
-	double nw=k;
+	double last=2; 
+	double nw=2;
 	do
 	{
 		last=nw;
@@ -28,24 +28,28 @@ double nroot(int k,int n)
 }
 int main()
 {
-	int t;
-	cin>>t;
-	while(t--)
-	{
-		int n,k;
-		cin>>n>>k;
-		cout.setf(ios::fixed);
-		cout.precision(6);
-		
-		if(n==0)
-			cout<<0.0<<endl;
-		else
+	for(int n=1;n<=1000;n++)
+		for(int k=1;k<=1000;k++)
 		{
-			double value=k;
-			
 			cout.setf(ios::fixed);
 			cout.precision(6);
-			cout<<nroot(value,n)<<endl;
+			
+			if(n==0)
+				cout<<0.0<<endl;
+			else
+			{
+				if(n==8&&k==128)
+					continue;
+				double value=k;
+				value*=p(n,n);
+				cout.setf(ios::fixed);
+				cout.precision(6);
+				cout<<n<<" "<<k<<" ";
+				cout<<nroot(value,n)<<endl;
+				
+			}
+			
 		}
-	}
+		
+	
 }
