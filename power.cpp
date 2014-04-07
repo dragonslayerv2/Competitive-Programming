@@ -2,7 +2,7 @@
 #define MOD (10000000+7)
 
 
-template<class T> T p(T n,T m)
+template<class T> T p(T &n,int m)
 {
     if(m==0) return 1%MOD;
     
