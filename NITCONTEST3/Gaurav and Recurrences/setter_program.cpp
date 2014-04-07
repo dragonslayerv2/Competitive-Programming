@@ -74,7 +74,7 @@ template<class T> class matrix
 		}
 };
 
-template<class T> T p(T n,int m,int MOD)
+template<class T> T p(T n,long long m,int MOD)
 {
     if(m==0) 
 		return matrix<long long>::identity(n.rowSize());
@@ -122,5 +122,4 @@ int main()
 			default: cout<<((p(T,a-5,MOD)*F)%MOD)[4][0]<<endl;
 		}
 	}	
-		
 }
