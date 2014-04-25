@@ -41,8 +41,6 @@ int initLIS(int a[MAX],int LIS[MAX],int back[MAX],int n)
 
 int main()
 {
-    	
-    
     int LIS[MAX];
     int back[MAX];
     

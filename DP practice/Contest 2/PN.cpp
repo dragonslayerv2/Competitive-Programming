@@ -1,56 +1,36 @@
 #include<stdio.h>
-#include<cstring>
-using namespace std;
-
-#define MOD 1000000007LL
+#include<string.h>
 
 char S[100005];
-long long DP[100000][27];
-inline int charHash(char a)
-{
-	return a-'A'+1;
-}
+long long DP[100005];
+#define MOD 1000000007LL
+
 int main()
-{
-	freopen("test.txt","r",stdin);
+{		
 	int t;
 	scanf("%d",&t);
+	getchar();
 	while(t--)
 	{
-		scanf("%s",S);
+		gets(S);
 		int n=strlen(S);
 		
-
-		
-		for(int i=n-1;i>=0;i--)
+		DP[0]=1;
+		int lastOccurence[27]={0};
+		int i;
+		for( i=1;i<=n;i++)
 		{
-			for(int j=0;j<27;j++)
-			{
-				if(i==n-1)
-				{
-					if(charHash(S[i])!=j)
-						DP[i][j]=2;
-					else
-						DP[i][j]=1;
-				}
-				else
-				{
-					if(charHash(S[i])!=j)
-					{
+			DP[i]=2*DP[i-1];
+			if(lastOccurence[S[i-1]-'A'])
+				DP[i]-=DP[lastOccurence[S[i-1]-'A']-1];
 			
-						DP[i][j]=DP[i+1][j]+DP[i+1][charHash(S[i])];
-					}
-					else
-					{
-						DP[i][j]=DP[i+1][j];
-					}
-				}
-				DP[i][j]%=MOD;
-			
-			}
-		
+			lastOccurence[S[i-1]-'A']=i;
+			DP[i]+=MOD;
+			DP[i]%=MOD;
 		}
-		
-		printf("%lld\n",DP[0][0]);
+	//	for(int i=0;i<=n;i++)
+	//		printf("%lld ",DP[i]);
+	//	printf("\n");
+		printf("%lld\n",DP[n]);
 	}
 }
