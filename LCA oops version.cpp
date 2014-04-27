@@ -57,6 +57,7 @@ template<class T> class rmq
 		}
 };
 
+
 class LCA
 {
 	public:
@@ -70,7 +71,7 @@ class LCA
 		vector<pair<int,int> > rmqArray;
 		rmq<pair<int,int> >  RMQ;
 		
-		void dfs(int source=0)
+		void dfs(int source)
 		{
 			if(!istraversed[source])
 			{
@@ -88,11 +89,11 @@ class LCA
 			}
 		}
 		
-		void bfs()
+		void bfs(int start)
 		{
 			queue<int> Q;
-			level[0]=0;
-			Q.push(0);
+			level[start]=0;
+			Q.push(start);
 		
 			while(!Q.empty())
 			{
@@ -111,14 +112,14 @@ class LCA
 		
 		
 	public:
-		LCA(tree &t):T(t)
+		LCA(tree &t,int start=0):T(t)
 		{
 			level.resize(t.size(),-1);
-			bfs();
+			bfs(start);
 		
 			position.resize(t.size());
 			istraversed.resize(t.size());
-			dfs();
+			dfs(start);
 		
 			RMQ=rmq<pair<int,int> >(rmqArray);
 		}

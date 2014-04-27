@@ -108,7 +108,7 @@ int main()
 	
 	transition_function[0]['a']=make_pair(0,make_pair('R','A'));
 	transition_function[0]['b']=make_pair(1,make_pair('R','b'));
-	/*
+	
 	transition_function[0]['a']=make_pair(1,make_pair('R','A'));
 	transition_function[0]['b']=make_pair(1,make_pair('R','b'));
 	transition_function[1]['a']=make_pair(2,make_pair('R','a'));
@@ -119,7 +119,7 @@ int main()
 	transition_function[3]['B']=make_pair(1,make_pair('S','X'));
 	transition_function[3]['a']=make_pair(1,make_pair('S','X'));
 	transition_function[3]['b']=make_pair(1,make_pair('S','X'));
-	turingMachine<char,transition_function_type> turing;*/
+//	turingMachine<char,transition_function_type> turing;
 	//--------------------------------------------------------------------------
 	turingMachine<char,transition_function_type> machine;
 	machine.initialise(0,transition_function,1);
