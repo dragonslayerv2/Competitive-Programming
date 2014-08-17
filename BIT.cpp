@@ -33,8 +33,11 @@ template<class T> class BIT
 			return sum;
 		}
 		
+		class operationOn0Exception{};
 		void increase(size_t idx, const value_type &val)
 		{ 
+			if(idx==0)
+				throw operationOn0Exception();
 			while (idx <= tree.size()-1)
 			{ 
 				tree[idx] += val; 
@@ -43,6 +46,8 @@ template<class T> class BIT
 		}
 		value_type query(size_t a,size_t b) const
 		{
+			if(a>b)
+				return 0;
 			return read(b)-read(a-1);
 		}
 		void clear()
@@ -50,7 +55,6 @@ template<class T> class BIT
 			tree.clear();
 		}
 };
-
 int main()
 {
 	BIT<long long> a(6);

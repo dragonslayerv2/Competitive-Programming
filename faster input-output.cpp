@@ -8,22 +8,22 @@
 	#define GETCHAR getchar
 	#define PUTCHAR putchar
 #endif
-	
+
 inline int readlong() 
 {
 	int flag=1;
     long long n = 0;
     char c;
+    int sign=1;
     while (1)
-    { 
-              c=GETCHAR();
-              if(c>='0'&&c<='9') {n = n * 10 + c - '0';flag=0;}
-              else if(flag!=1) break; 
-                              
-    }
-    return n;
+    { 		
+		c=GETCHAR();
+    	if(c=='-')	sign=-1;
+        else if(c>='0'&&c<='9') {n = n * 10 + c - '0';flag=0;}
+        else if(flag!=1) break; 
+`    }
+    return sign*n;
 }
- 
 
 inline void writeInt(int x) 
 {

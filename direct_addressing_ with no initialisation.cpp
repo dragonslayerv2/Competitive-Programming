@@ -13,16 +13,14 @@ using namespace std;
 template<size_t sz>class directmap
 {
 	private:
-		
-		size_t _set[sz];
-		size_t _stack[sz];
-		size_t _top;
+		int _set[sz];
+		int _stack[sz];
+		int _top;
 		
 	public:
-		
 		directmap()
 		{
-			_top=0;
+			clear();
 		}
 		void set(size_t pos)
 		{
@@ -56,10 +54,16 @@ template<size_t sz>class directmap
 				_top--;
 			}
 		}
+		
 		size_t size()
 		{
 			return sz;
 		}
+		
+		void clear(){
+			_top=0;
+		}
+		
 };
 
 

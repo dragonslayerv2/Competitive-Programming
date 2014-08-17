@@ -14,7 +14,7 @@
 #include<map>
 #include<algorithm>
 using namespace std;
-//#define SUFFIX_ARRAY_DEBUG
+#define SUFFIX_ARRAY_DEBUG
 
 class suffix_array
 {
@@ -75,7 +75,7 @@ class suffix_array
 			for(int i=0;i<_P.size();i++)
 			{
 				for(int j=0;j<_P[i].size();j++)
-					cout<<_P[i][j]<<" ";
+					cout<<_P[i][j]<<"\t";
 				cout<<endl;
 			}
 			#endif
@@ -104,18 +104,18 @@ class suffix_array
 		{
 			return _sa[pos];
 		}
-		
+		// debug
 		int lcp(size_t a,size_t b) const
 		{
-			int ans=0;
-			for(int k=_P.size()-1;k>=0;k--)
-				if(_P[k][a]==_P[k][b])
-				{
-					ans+=(1<<k);
-					a+=(1<<k);
-					b+=(1<<k);
-				}
-			return ans;
+				int ans=0;
+				for(int k=_P.size()-1;k>=0;k--)
+					if(_P[k][a]==_P[k][b])
+					{
+						ans+=(1<<k);
+						a+=(1<<k);
+						b+=(1<<k);
+					}
+				return ans;
 		}
 		
 		void clear()
@@ -193,6 +193,9 @@ int main()
 	string a;
 	cin>>a;
 	suffix_array sa(a);
+	
+	for(int i=0;i<sa.size()-1;i++)
+		cout<<a.substr(sa[i])<<" "<<sa.lcp(sa[i],sa[i+1])<<"\n";
 	
 	int t;
 	cin>>t;

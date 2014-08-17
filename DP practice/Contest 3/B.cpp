@@ -5,14 +5,13 @@ using namespace std;
 int DP[2][101][101];
 int main()
 {
-	freopen("testB.txt","r",stdin);
+	//freopen("testB.txt","r",stdin);
 	int T;
 	cin>>T;
 	while(T--)
 	{
 		int t;
 		cin>>t;
-		cout<<t<<" ";
 		
 		int n,k;
 		cin>>n>>k;
@@ -31,7 +30,7 @@ int main()
 				if(K-1>=0)
 					DP[1][N][K]+=DP[1][N+1][K-1];
 			}
-			
+		
 		cout<<DP[1][1][k]+DP[0][1][k]<<endl;
 	}
 }

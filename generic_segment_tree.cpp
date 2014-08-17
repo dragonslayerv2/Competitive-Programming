@@ -3,8 +3,8 @@
 	Copyright: 
 	Author: Shobhit Saxena
 	Date: 09/02/14 12:27
-	Description: This is the generic implementation of Segment trees.
-	Update the UpdateFunction and MergeFunction to change the behaviour of the tree.
+	Description: This is the generic implementation of Segment trees .
+	Update the UpdateFunction and MergeFunction to change the behaviour of the tree .
 */
 
 #include<iostream>

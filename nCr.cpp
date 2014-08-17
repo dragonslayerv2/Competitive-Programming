@@ -39,6 +39,6 @@ void initfact(int n=MAX-1)
 int main()
 {
 	initfact();
-	printf("%d",C((7+7-1),(7-1)));
+	printf("%d",C((40),(20)));
 
 }

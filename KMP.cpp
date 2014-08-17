@@ -23,30 +23,29 @@ void computePiFunction(char *p,int *Pi)
 			Pi[i]=k;	
 		}
 }
+
 void matcher(char *P,char *T,int *Pi)
 {
-		int m=strlen(P);
-		int q=-1;
-		for(int i=0;T[i];i++)
+	int m=strlen(P);
+	int q=-1;
+	for(int i=0;T[i];i++)
+	{
+		while(q>=0&&P[q+1]!=T[i])
+			q=Pi[q];
+		if(P[q+1]==T[i])	
+			q++;
+		if(q==m-1)
 		{
-			
-			while(q>=0&&P[q+1]!=T[i])
-			{
-				q=Pi[q];
-			}
-			if(P[q+1]==T[i])	q++;
-			if(q==m-1)
-			{
-				printf("Found at pos=%d\n",i-m+1);
-				q=Pi[q];
-			}
-			//cout<<"At "<<T[i]<<" = "<<q<<endl;	
-			
+			printf("Found at pos=%d\n",i-m+1);
+			q=Pi[q];
 		}
+	}
 }
 
 int main()
 {
+	
+	
 	char pattern[PATTERN_SIZE],text[TEXT_SIZE];
 	int Pi[PATTERN_SIZE];
 	
