@@ -4,6 +4,7 @@ using namespace std;
 
 int main()
 {
+	cerr<<"Kunal ullu ka patha"<<endl;
 	int t;
 	cin>>t;
 	while(t--)

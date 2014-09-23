@@ -1,6 +1,5 @@
 #include<bits/stdc++.h>
 using namespace std;
-#define HASHVAL 1000000007
 
 class sieve
 {
@@ -44,8 +43,8 @@ class sieve
 template<size_t SIZE> class bigint
 {
 	public:
-		const static int SCALE = 100000000; 
-		const static int WEIGHT = 8;
+		const static int SCALE = 1000000000; 
+		const static int WEIGHT = 9;
 		int digit[SIZE];
 		int firstdigit;
 		int lastdigit;
@@ -83,6 +82,25 @@ template<size_t SIZE> class bigint
 		bigint(string &number){
 			reset();
 			int last=number.size();
+			int currentNumber = 0;
+			int scale=1;
+			while(last>0){
+				last--;
+				currentNumber+=(number[last]-'0')*scale;
+				scale*=10;
+				if(scale==SCALE){
+					scale=1;
+					digit[firstdigit--]=currentNumber;
+					currentNumber=0;
+				}
+			}
+			if(currentNumber!=0)
+				digit[firstdigit--]=currentNumber;
+		}
+		
+		bigint(char *number){
+			reset();
+			int last=strlen(number);
 			int currentNumber = 0;
 			int scale=1;
 			while(last>0){
@@ -226,10 +244,32 @@ template<size_t SIZE> ostream & operator <<(ostream &stream, const bigint<SIZE> 
 	stream<<number.to_string();
 	return stream;
 }
+#include<stdio.h>
+#ifdef ONLINE_JUDGE
+	#define GETCHAR getchar_unlocked	
+	#define PUTCHAR putchar_unlocked
+#endif
+#ifndef ONLINE_JUDGE
+	#define GETCHAR getchar
+	#define PUTCHAR putchar
+#endif
+inline int readNumber(char *n) 
+{
+	int flag=1;
+    char c;
+    int pos=0;
+    while (1)
+    { 		
+		c=GETCHAR();
+        if(c>='0'&&c<='9') {n[pos++] = c;flag=0;}
+        else if(flag!=1) break; 
+    }
+	n[pos]='\0';
+}
 
 int main()
 {
-	const int SIEVE_SIZE = 62000;
+	const int SIEVE_SIZE = 71500;
 	sieve S(SIEVE_SIZE);
 	int t;
 	cin>>t;
@@ -240,22 +280,41 @@ int main()
 			primes.push_back(i);
 			
 	vector<int> factors;
+	char n[2000];
 	while(t--){
-		string n;
-		cin>>n;
+		readNumber(n);
 		
 		long long numberL;
 		
-		bigint<200> numberB(n);
+		bigint<200> numberB;
 		bool isLong=false;
-		if(n.length()<=18){
-			sscanf(n.c_str(),"%lld",&numberL);
+		if(strlen(n)<=18){
+			sscanf(n,"%lld",&numberL);
 			isLong=true;
 		}
-			
+		else
+		{
+			numberB=bigint<200>(n);
+		}
 		factors.clear();
 		factors.reserve(10000);
-		for(int i=0;i<primes.size();i++){
+		if(isLong){
+			while(!(numberL&1)){
+				factors.push_back(2);
+				numberL>>=1;
+			}
+		}
+		else{
+			while(!(numberB.digit[numberB.lastdigit]&1)){
+				factors.push_back(2);
+				numberB/=2;
+			}
+			while(!(numberB.digit[numberB.lastdigit]%5)){
+				factors.push_back(5);
+				numberB/=5;
+			}
+		}
+		for(int i=1;i<primes.size();i++){
 			if(isLong){
 				if(numberL==1) break;
 				while((numberL%primes[i])==0){
@@ -281,12 +340,12 @@ int main()
 			if(!(numberB.digit[numberB.lastdigit]==1&&numberB.firstdigit==numberB.lastdigit-1))
 			flag=true;	
 		}
-		cout<<factors.size()+flag<<endl;
+		printf("%d\n",(int)factors.size()+flag);
 		for(int i=0;i<factors.size();i++)
-			cout<<factors[i]<<"\n";
+			printf("%d\n",factors[i]);
 		if(flag){
 			if(isLong)
-				cout<<numberL<<endl;
+				printf("%lld\n",numberL);
 			else
 				cout<<numberB<<endl;
 		}

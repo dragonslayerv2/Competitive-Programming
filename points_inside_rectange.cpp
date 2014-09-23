@@ -17,7 +17,7 @@ struct query{
 	char type;
 	int x,y;
 	query(char type='\0',int x=-1,int y=-1){
-		this->type==type;
+		this->type=type;
 		this->x=x;
 		this->y=y;
 	}
@@ -65,6 +65,7 @@ template<class T> class BIT
 				idx += (idx & (- idx)); 
 			}
 		}
+		
 		value_type query(size_t a,size_t b) const
 		{
 			if(a>b)
@@ -79,9 +80,9 @@ template<class T> class BIT
 
 
 int main(){
+//	freopen("rectTest.txt","r",stdin);
 	int q;
 	cin>>q;
-
 	vector<query> queries;
 	queries.reserve(q);
 
@@ -110,20 +111,63 @@ int main(){
 	// generate the BITMap
 	for(int i=0;i<queries.size();i++){
 		int idx=xCoordinateRank[queries[i].x];
+		while(idx>0)
+		{
+			BITMap[idx][queries[i].y]; 
+			idx-=(idx&(-idx));
+		}
+		
+		idx=xCoordinateRank[queries[i].x];
 		while (idx < BITMap.size())
 		{ 
-			BITMap[idx][queries[i].y]; // make an entry for y coordinate in the BITMap
+			BITMap[idx][queries[i].y]; 
 			idx += (idx & (- idx)); 
 		}
 	}
 	
 	for(int i=0;i<BITMap.size();i++){
 		int currentRank=0;
-		for(map<int,int>::iterator i=BITMap[i].begin();i!=BITMap[i].end();i++){
+		for(map<int,int>::iterator j=BITMap[i].begin();j!=BITMap[i].end();j++){
 			currentRank++;
-			i->second=currentRank;
+			j->second=currentRank;
 		}
 	}
 	
-	vector<BIT> bits(BITMap.size())
+	vector<BIT<int> > bits(BITMap.size());
+	for(int i=0;i<bits.size();i++)
+		bits[i].assign(BITMap[i].size());
+	
+	for(int i=0;i<queries.size();i++)
+	{
+		int x=queries[i].x,y=queries[i].y;
+		int xRank = xCoordinateRank[x];
+		int idx=xRank;
+		switch(queries[i].type)
+		{
+			case 'I': 
+
+					while (idx < BITMap.size())
+					{ 
+						bits[idx].increase(BITMap[idx][y],1); 
+						idx += (idx & (- idx)); 
+					}
+					break;
+			case 'D':
+					while (idx < BITMap.size())
+					{ 
+						bits[idx].increase(BITMap[idx][y],-1); 
+						idx += (idx & (- idx)); 
+					}
+					break;
+			case 'Q':
+					int sum=0;
+					while(idx>0)
+					{
+						sum+=bits[idx].read(BITMap[idx][y]);
+						idx-=(idx&(-idx));
+					}
+					cout<<sum<<endl;
+					break;
+		}
+	}
 }

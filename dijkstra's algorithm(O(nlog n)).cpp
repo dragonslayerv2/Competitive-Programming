@@ -7,7 +7,6 @@ using namespace std;
 
 typedef vector<list<pair<int,int> > > graph;
 
-
 struct cmp
 {
 	bool operator()(pair<int,int> a,pair<int,int> b)
@@ -24,7 +23,7 @@ vector<int> dijkstras(const graph &G,int source)
 	vector<int> distances(G.size(),INVALID);  
 	
 	distances[source]=0;
-	Q.push(make_pair(source,0));
+	Q.push(make_pair(0,source));
 	
 	while(!Q.empty())
 	{
@@ -32,6 +31,7 @@ vector<int> dijkstras(const graph &G,int source)
 		Q.pop();
 		if(!used[current.second])
 		{
+			cout<<"AT "<<current.second;
 			used[current.second]=true;
 			for(list<pair<int,int> >::const_iterator i=G[current.second].begin();i!=G[current.second].end();i++)
 			{

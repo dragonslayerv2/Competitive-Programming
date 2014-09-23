@@ -25,7 +25,7 @@ int prims(const graph &G,int source)
 	vector<int> distances(G.size(),INVALID);  
 	
 	distances[source]=0;
-	Q.push(make_pair(source,0));
+	Q.push(make_pair(0,source));
 	
 	int weight=0;
 	while(!Q.empty())

@@ -9,7 +9,7 @@
 	#define PUTCHAR putchar
 #endif
 
-inline int readlong() 
+inline long long readlong() 
 {
 	int flag=1;
     long long n = 0;
@@ -21,7 +21,7 @@ inline int readlong()
     	if(c=='-')	sign=-1;
         else if(c>='0'&&c<='9') {n = n * 10 + c - '0';flag=0;}
         else if(flag!=1) break; 
-`    }
+   }
     return sign*n;
 }
 

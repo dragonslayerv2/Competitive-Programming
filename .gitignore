@@ -168,7 +168,9 @@ App_Data/*.ldf
 #############
 ## Windows detritus
 #############
-
+*.exe
+*.out
+*.txt
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
@@ -213,3 +215,4 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
