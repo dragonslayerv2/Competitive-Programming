@@ -118,9 +118,9 @@ int main(int argc,char *argv[])
 			removeFile(testFile+".exe");
 			cout<<"Compiling Files: "<<endl;
 			
-			thread threadP1		([](){	system(("g++ "+program1+".cpp -o"+program1+".exe").c_str());});
-			thread threadP2		([](){	system(("g++ "+program2+".cpp -o"+program2+".exe").c_str());});
-			thread threadtest	([](){	system(("g++ "+testFile+".cpp -o"+testFile+".exe").c_str());});
+			thread threadP1		([](){	system(("g++ "+program1+".cpp -o"+program1+".exe -std=c++11").c_str());});
+			thread threadP2		([](){	system(("g++ "+program2+".cpp -o"+program2+".exe -std=c++11").c_str());});
+			thread threadtest	([](){	system(("g++ "+testFile+".cpp -o"+testFile+".exe -std=c++11").c_str());});
 			
 			cout<<"1. "<<program1<<"\t: ";	if(threadP1.joinable())		threadP1.join();	checkFile(program1+".exe");cout<<"OK"<<endl;
 			cout<<"2. "<<program2<<"\t: ";	if(threadP2.joinable())		threadP2.join();	checkFile(program2+".exe");cout<<"OK"<<endl;

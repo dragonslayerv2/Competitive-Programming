@@ -5,35 +5,35 @@
 #include<list>
 using namespace std;
 
-typedef vector<list<pair<int,int> > > graph;
+typedef vector<list<pair<long long,long long> > > graph;
 
 struct cmp
 {
-	bool operator()(pair<int,int> a,pair<int,int> b)
+	bool operator()(pair<long long,long long> a,pair<long long,long long> b)
 	{
 		return a>b;
 	}
 };
-vector<int> dijkstras(const graph &G,int source)
+vector<long long> dijkstras(const graph &G,long long source)
 {
-	const int INVALID = INT_MAX;
-	priority_queue<pair<int,int>,vector<pair<int,int> >, cmp > Q;
+	const long long INVALID = long long_MAX;
+	priority_queue<pair<long long,long long>,vector<pair<long long,long long> >, cmp > Q;
 	
 	vector<bool> used(G.size(),false);  
-	vector<int> distances(G.size(),INVALID);  
+	vector<long long> distances(G.size(),INVALID);  
 	
 	distances[source]=0;
 	Q.push(make_pair(0,source));
 	
 	while(!Q.empty())
 	{
-		pair<int,int> current=Q.top();
+		pair<long long,long long> current=Q.top();
 		Q.pop();
 		if(!used[current.second])
 		{
 			cout<<"AT "<<current.second;
 			used[current.second]=true;
-			for(list<pair<int,int> >::const_iterator i=G[current.second].begin();i!=G[current.second].end();i++)
+			for(list<pair<long long,long long> >::const_iterator i=G[current.second].begin();i!=G[current.second].end();i++)
 			{
 				if(distances[i->first]>distances[current.second]+i->second)
 				{
@@ -46,21 +46,21 @@ vector<int> dijkstras(const graph &G,int source)
 	}
 	return distances;	
 }
-int main()
+long long main()
 {
 	freopen("test.txt","r",stdin);
-	int v,e;
+	long long v,e;
 	cin>>v>>e;
 	graph G(v);
 	while(e--)
 	{
-		int a,b,w;
+		long long a,b,w;
 		cin>>a>>b>>w;
 		G[a].push_back(make_pair(b,w));
 	}
-	int s;
+	long long s;
 	cin>>s;
-	vector<int> distances=dijkstras(G,s);
-	for(int i=0;i<distances.size();i++)
+	vector<long long> distances=dijkstras(G,s);
+	for(long long i=0;i<distances.size();i++)
 		cout<<distances[i]<<" ";
 }

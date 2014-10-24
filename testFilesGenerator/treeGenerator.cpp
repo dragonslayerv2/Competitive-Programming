@@ -89,7 +89,7 @@ int main()
 	cout<<t<<endl;
 	while(t--)
 	{
-		int n=100;
+		int n=10;
 		cout<<n<<endl;
 		disjointSet DS(n);
 		for(int i=0;i<n-1;i++)
@@ -102,7 +102,8 @@ int main()
 				b=rand()%n;
 			}
 			DS.Union(a,b);
-			cout<<1+a<<" "<<1+b<<endl;
+			cout<<1+a<<" "<<1+b<<" "<<rand()%100<<endl;
 		}
+		
 	}
 }

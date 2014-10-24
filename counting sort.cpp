@@ -18,7 +18,7 @@ using namespace std;
 template<class T> class default_counting_hasher
 {
 	public:
-		T operator ()(T x)
+		T operator ()(const T &x)
 		{
 			return x;
 		}
@@ -41,27 +41,6 @@ template<class iterator,class hasher> void counting_sort(iterator _begin,iterato
 	copy(final_array.begin(),final_array.end(),_begin);
 }
 
-
-
-template<class T,class B> class radix_hasher
-{
-	int pos;
-	public:
-		radix_hasher(int POS)
-		{
-			pos=POS;
-		}
-		T operator ()(const B &ob)
-		{
-			return ob[pos];
-		}
-};
-
-
-
-
-
-
 int main()
 {
 	vector<string> a(3);
@@ -71,8 +50,8 @@ int main()
 	
 	counting_sort(a.begin(),a.end(),radix_hasher<char,string>(0),256);
 	
-	cout<<a[0];
-	cout<<a[1];
-	cout<<a[2];
+	cout<<a[0]<<endl;
+	cout<<a[1]<<endl;
+	cout<<a[2]<<endl;
 	
 }

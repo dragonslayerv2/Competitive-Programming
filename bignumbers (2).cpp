@@ -47,8 +47,6 @@ void verybig::display()
                                       
                                       for(int j=0;j<numzeros;j++)
                                                        printf("0");
-                                      
-                                      
                         }   
                                       
            }

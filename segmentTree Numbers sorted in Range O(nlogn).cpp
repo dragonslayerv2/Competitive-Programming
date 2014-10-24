@@ -5,9 +5,6 @@
 #include<list>
 using namespace std;
 
-
-#define DEBUG
-
 class segmentTree
 {
 	public:

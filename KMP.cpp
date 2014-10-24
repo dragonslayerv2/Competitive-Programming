@@ -34,6 +34,7 @@ void matcher(char *P,char *T,int *Pi)
 			q=Pi[q];
 		if(P[q+1]==T[i])	
 			q++;
+		cout<<"At "<<i<<" "<<q<<endl;
 		if(q==m-1)
 		{
 			printf("Found at pos=%d\n",i-m+1);
@@ -45,13 +46,14 @@ void matcher(char *P,char *T,int *Pi)
 int main()
 {
 	
-	
+	freopen("test.txt","r",stdin);
 	char pattern[PATTERN_SIZE],text[TEXT_SIZE];
 	int Pi[PATTERN_SIZE];
 	
 	gets(pattern);
 	computePiFunction(pattern,Pi);
-
+	for(int i=0;i<5;i++)
+		cout<<Pi[i]<<" ";
 	gets(text);
 	matcher(pattern,text,Pi);
 	
