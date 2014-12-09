@@ -13,6 +13,18 @@
 #include<algorithm>
 using namespace std;
 
+long long p(long long n,int m,int MOD)
+{
+    if(m==0) return 1%MOD;
+    
+    long long x=p(n,m/2,MOD);
+    if(m%2==0) 
+               return (x*x)%MOD;
+    else
+               return (((x*x)%MOD)*n)%MOD;
+}
+
+
 
 template<class T> class winner_tree
 {

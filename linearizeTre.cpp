@@ -1,11 +1,3 @@
-/*
-	Name: Linearise the tree
-	Copyright: 
-	Author: Shobhit Saxena
-	Date: 27/04/14 15:59
-	Description: Linearise the tree so that all queries on decendents of a node can be converted to range queries.
-*/
-
 #include<iostream>
 #include<vector>
 #include<list>
@@ -98,10 +90,13 @@ template<class T> class BIT
 
 int main()
 {
-	freopen("testLT.txt","r",stdin);
 	ios_base::sync_with_stdio(false);
 	int n,m;
 	cin>>n>>m;
+	
+	vector<int> values(n);
+	for(int i=0;i<n;i++)
+		cin>>values[i];
 	
 	linearTree::tree T(n);
 		
@@ -109,6 +104,8 @@ int main()
 	{
 		int a,b;
 		cin>>a>>b;
+		a--;
+		b--;
 		T[a].push_back(b);
 		T[b].push_back(a);
 	}	
@@ -116,7 +113,9 @@ int main()
 	linearTree LT(T);
 	
 	BIT<int> bit(n);
-	
+	for(int i=0;i<n;i++){
+		bit.increase(LT.pos[i],values[i]);
+	}
 	
 	while(m--)
 	{
@@ -126,15 +125,16 @@ int main()
 		{
 			int parent;
 			cin>>parent;
+			parent--;
 			cout<<bit.query(LT.pos[parent],LT.pos[parent]+LT.child[parent])<<endl;
 		}
 		else
 		{
 			int node,value;
 			cin>>node>>value;
+			node--;
 			bit.increase(LT.pos[node],value-bit.query(LT.pos[node],LT.pos[node]));
 		}
 	}
-
 }
 
