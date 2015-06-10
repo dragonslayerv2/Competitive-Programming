@@ -51,7 +51,7 @@ void verybig::display()
                                       
            }
 }
-void verybig::multiply(int a)
+void verybig::multiply(long long a)
 {
            for(int i=last_digit;i>first_digit;i--)
            {

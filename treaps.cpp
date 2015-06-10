@@ -9,8 +9,8 @@
 */
 #define DEBUG_LEVEL
 #include<iostream>
-#include<random>
 #include<map>
+#include<cstdlib>
 using namespace std;
 
 template<class T,class R> class treap
@@ -472,7 +472,7 @@ template<class TT,class RR> treap<TT,RR> merge(treap<TT,RR> &A,treap<TT,RR> &B,t
 class random
 {
 	private:
-		default_random_engine generator;
+	//	default_random_engine generator;
 		
 	public:
 		typedef double value_type;
@@ -488,7 +488,7 @@ class random
 		
 		value_type operator()()
 		{
-			return generate_canonical<double,63>(generator);
+			return rand();//generate_canonical<double,63>(generator);
 		}
 };
 
@@ -502,13 +502,10 @@ int main()
 	{
 		a.clear();
 		for(int j=0;j<5000;j++)
-		{
 			a.insert(j);
-		}
 		heights[a.height()]++;
 	}
+	
 	for(auto i=heights.begin();i!=heights.end();i++)
-	{
 		cout<<i->first<<" "<<i->second<<endl;
-	}
 }
