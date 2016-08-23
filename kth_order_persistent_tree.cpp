@@ -95,7 +95,6 @@ class PersistentSegmentTree {
                     currentNode->rightNode = new Node(currentNode->rightNode);
                     update(currentNode->rightNode, position, value);
                 }
-
                 currentNode->value = currentNode->leftNode->value + currentNode->rightNode->value;
             }
         }
